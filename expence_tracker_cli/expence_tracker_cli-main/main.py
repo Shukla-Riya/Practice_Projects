@@ -1,25 +1,88 @@
-print("__i am the new code__")
+class Expense:
+    def __init__(self, date, amount, category, description):
+        self.date = date
+        self.amount = amount
+        self.category = category
+        self.description = description
 
-import csv
+    def __str__(self):
+        return f"{self.date} | {self.amount} | {self.category} | {self.description}"
+    
+class ExpenseTracker:
+    def __init__(self):
+        self.expenses = []
+        self.filename = "expenses.csv"
+    def add_expense(self,date,amount, category, description):
+        expense = Expense(date, amount, category, description)
+        self.expenses.append(expense)
+        print("Entry Successful!")
 
-Date = input("Enter date: ")
-Category = input("Enter the category: ")
 
-while True:
-    try:
-        Amount = float(input("Enter the Amount: "))
-        break
+    def view_expenses(self):
+        if len(self.expenses) ==0:
+            print("No Expense Found")
+        else:
+            print("\n EXPENSES")
+
+            for i in self.expenses:
+                print(i)
+
+    def get_total_spending(self):
+        return sum(expense.amount for expense in self.expenses)
+    
+    def get_category_summary(self):
+         category_totals = {}
+    
+         for expense in self.expenses:
+             if expense.category in category_totals:
+                 category_totals[expense.category] += expense.amount
+             else:
+                 category_totals[expense.category] = expense.amount
+    
+         return category_totals
+
+
+def main():
+    tracker = ExpenseTracker()
+
+    while True:
+        print("\n --> EXPENSE TRACKER <--")
+        print("1. Add Expense")
+        print("2. View All Expenses")
+        print("3. View Total Spending")
+        print("4. View Category Summary")
+        print("5. Exit")
+
+        try:
+            choice = input('\nEnter your choice: ')
+        except:
+            print("Enter valid choice")
+
+        if choice == '1':
+            date = input("Enter date (YY-MM-DD): ")
+            amount = input("Enter amount: ")
+            category = input("Enter category: ")
+            description = input("Enter discription: ")
+
+            tracker.add_expense(date,amount,category,description)
+
+        elif choice == '2':
+            tracker.view_expenses
         
-    except:
-        print("please enter a valid number")
-       
+        elif choice == '3':
+            total = tracker.get_total_spending
+            print(f"Total spending is: ",{total})
 
-with open("expenses.csv","a", newline="") as f:
-    write = csv.writer(f)
-    write.writerow([Date,Category,Amount])
+        elif choice == '4':
+            summary = tracker.get_category_summary()
+            print("\n CATEGORY WISE SUMMARY")
+            for category, amount in summary.items():
+                print(f"{category} : {amount}")
 
-print("Saved!")
+        elif choice == '5':
+            print("GOODBYE!")
 
-with open("expenses.csv", "r", newline="") as file:
-    for row in file:
-        print(row)
+if __name__ == "__main__":
+    main()
+
+
