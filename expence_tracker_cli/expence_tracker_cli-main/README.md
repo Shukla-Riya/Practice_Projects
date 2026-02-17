@@ -17,4 +17,7 @@ A simple, efficient Python tool for tracking personal expenses directly from the
 ## Future Improvements
 * Add data analysis (e.g., total spent per category).
 * Implement a search feature by date.
+
+## Update
+*Implented the concept of Object Oriented Structure into the program
   
