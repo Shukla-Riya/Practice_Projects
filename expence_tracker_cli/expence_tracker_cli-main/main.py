@@ -54,33 +54,35 @@ def main():
         print("5. Exit")
 
         try:
-            choice = input('\nEnter your choice: ')
-        except:
+            choice = int(input('\nEnter your choice: '))
+        except ValueError:
             print("Enter valid choice")
+            continue
 
-        if choice == '1':
+        if choice == 1:
             date = input("Enter date (YY-MM-DD): ")
-            amount = input("Enter amount: ")
+            amount = float(input("Enter amount: "))
             category = input("Enter category: ")
             description = input("Enter discription: ")
 
             tracker.add_expense(date,amount,category,description)
 
-        elif choice == '2':
-            tracker.view_expenses
+        elif choice == 2:
+            tracker.view_expenses()
         
-        elif choice == '3':
-            total = tracker.get_total_spending
-            print(f"Total spending is: ",{total})
+        elif choice == 3:
+            total = tracker.get_total_spending()
+            print(f"Total spending is: {total}")
 
-        elif choice == '4':
+        elif choice == 4:
             summary = tracker.get_category_summary()
             print("\n CATEGORY WISE SUMMARY")
             for category, amount in summary.items():
                 print(f"{category} : {amount}")
 
-        elif choice == '5':
+        elif choice == 5:
             print("GOODBYE!")
+            break
 
 if __name__ == "__main__":
     main()
